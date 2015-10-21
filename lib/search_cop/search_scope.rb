@@ -40,7 +40,7 @@ module SearchCop
     end
 
     def type(key, type)
-      reflection.type[key.to_s] = reflection.type[key.to_s] || type
+      reflection.type[key.to_s] ||= type
     end
 
     def aliases(hash)

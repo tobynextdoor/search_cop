@@ -37,7 +37,7 @@ class Product < ActiveRecord::Base
   include SearchCop
 
   search_scope :search do
-    attributes :title, :description, :brand, :notice, :stock, :price, :created_at, :created_on, :available, :test
+    attributes :title, :description, :brand, :notice, :stock, :price, :created_at, :created_on, :available, :aggregated_value
     attributes :comment => ["comments.title", "comments.message"], :user => ["users.username", "users_products.username"]
     attributes :primary => [:title, :description]
 
@@ -53,7 +53,7 @@ class Product < ActiveRecord::Base
       options :title, :dictionary => "english"
     end
 
-    type :test, :float
+    type :aggregated_value, :float
   end
 
   search_scope :user_search do
@@ -72,19 +72,8 @@ class Product < ActiveRecord::Base
   belongs_to :user
 end
 
-class ProductTest < Product
-  include SearchCop
-
-  search_scope :search do
-    attributes :test2
-  end
-end
-
 FactoryGirl.define do
   factory :product do
-  end
-
-  factory :product_test do
   end
 
   factory :comment do

@@ -8,7 +8,6 @@ module SearchCop
       self.query_info = QueryInfo.new(model, scope)
 
       arel = SearchCop::Parser.parse(query, query_info).optimize!
-
       self.sql = SearchCop::Visitors::Visitor.new(model.connection).visit(arel)
     end
 
