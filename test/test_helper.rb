@@ -37,7 +37,7 @@ class Product < ActiveRecord::Base
   include SearchCop
 
   search_scope :search do
-    attributes :title, :description, :brand, :notice, :stock, :price, :created_at, :created_on, :available, :aggregated_value
+    attributes :title, :description, :brand, :notice, :stock, :price, :created_at, :created_on, :available, :aggregated_column
     attributes :comment => ["comments.title", "comments.message"], :user => ["users.username", "users_products.username"]
     attributes :primary => [:title, :description]
 
@@ -53,7 +53,7 @@ class Product < ActiveRecord::Base
       options :title, :dictionary => "english"
     end
 
-    type :aggregated_value, :float
+    type :aggregated_column, :float
   end
 
   search_scope :user_search do

@@ -88,12 +88,17 @@ module SearchCopGrammar
         table, column = attribute_definition.split(".")
         klass = klass_for(table)
 
-        type_ = type || begin
-          raise(SearchCop::UnknownAttribute, "Unknown attribute #{attribute_definition}") unless klass.columns_hash[column]
+        column_type = type || begin
+          if klass.columns_hash[column].nil?
+            raise(SearchCop::UnknownAttribute,
+              "Unknown attribute #{attribute_definition}")
+          end
+
           klass.columns_hash[column].type
         end
 
-        Attributes.const_get(type_.to_s.classify).new(klass, alias_for(table), column, options)
+        Attributes.const_get(column_type.to_s.classify).
+          new(klass, alias_for(table), column, options)
       end
     end
 

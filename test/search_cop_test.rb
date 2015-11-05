@@ -92,7 +92,7 @@ class SearchCopTest < SearchCop::TestCase
   end
 
   def test_types
-    assert Product.search("aggregated_value = 30.3")
+    assert Product.search("aggregated_column = 30.3")
     assert_raises SearchCop::UnknownColumn do
       Product.unsafe_search("unknown_attribute = value")
     end
@@ -125,7 +125,7 @@ class SearchCopTest < SearchCop::TestCase
   def test_default_attributes_fales
     with_options(Product.search_scopes[:search], :title, :default => false) do
       with_options(Product.search_scopes[:search], :description, :default => false) do
-        assert_equal Product.search_scopes[:search].reflection.attributes.keys - ["title", "description", "aggregated_value"], Product.search_scopes[:search].reflection.default_attributes.keys
+        assert_equal Product.search_scopes[:search].reflection.attributes.keys - ["title", "description", "aggregated_column"], Product.search_scopes[:search].reflection.default_attributes.keys
       end
     end
   end
